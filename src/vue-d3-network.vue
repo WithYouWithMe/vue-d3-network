@@ -1,7 +1,30 @@
+<template lang="pug">
+  .net(@mousemove="move" @touchmove="move")
+    svg-renderer(
+      ref="svg"
+      :size="size"
+      :nodes="nodes"
+      :links="links"
+      :selected="selected"
+      :linksSelected="linksSelected"
+      :strLinks="strLinks"
+      :linkWidth="linkWidth"
+      :nodeLabels="nodeLabels"
+      :linkLabels="linkLabels"
+      :fontSize="fontSize"
+      :labelOffset="labelOffset"
+      :offset="offset"
+      :padding="padding"
+      :nodeSize="nodeSize"
+      :noNodes="noNodes"
+      :nodeSym="nodeSvg"
+      @action="methodCall"
+    )
+</template>
+
 <script>
 import * as forceSimulation from 'd3-force'
 import svgRenderer from './components/svgRenderer.vue'
-import canvasRenderer from './components/canvasRenderer.vue'
 import saveImage from './lib/js/saveImage.js'
 import svgExport from './lib/js/svgExport.js'
 const d3 = Object.assign({}, forceSimulation)
@@ -9,7 +32,6 @@ const d3 = Object.assign({}, forceSimulation)
 export default {
   name: 'd3-network',
   components: {
-    canvasRenderer,
     svgRenderer
   },
   props: {
@@ -49,7 +71,6 @@ export default {
   },
   data () {
     return {
-      canvas: false,
       nodes: [],
       links: [],
       size: {
@@ -92,46 +113,6 @@ export default {
       nodeSvg: null,
       resizeListener: true
     }
-  },
-  render (createElement) {
-    let ref = 'svg'
-    let props = {}
-    let renderer = 'svg-renderer'
-    let bindProps = [
-      'size',
-      'nodes',
-      'links',
-      'selected',
-      'linksSelected',
-      'strLinks',
-      'linkWidth',
-      'nodeLabels',
-      'linkLabels',
-      'fontSize',
-      'labelOffset',
-      'offset',
-      'padding',
-      'nodeSize',
-      'noNodes'
-    ]
-
-    for (let prop of bindProps) {
-      props[prop] = this[prop]
-    }
-    props.nodeSym = this.nodeSvg
-
-    if (this.canvas) {
-      renderer = 'canvas-renderer'
-      ref = 'canvas'
-      props.canvasStyles = this.options.canvasStyles
-    }
-
-    return createElement('div', {
-      attrs: { class: 'net' },
-      on: { 'mousemove': this.move, '&touchmove': this.move }
-    }, [createElement(renderer, {
-      props, ref, on: { action: this.methodCall }
-    })])
   },
   created () {
     this.updateOptions(this.options)
@@ -181,14 +162,17 @@ export default {
     nodeSym () {
       this.updateNodeSvg()
     },
-    options (newValue, oldValue) {
-      this.updateOptions(newValue)
-      if (oldValue.size && newValue.size) {
-        if ((oldValue.size.w !== newValue.size.w) || (oldValue.size.h !== newValue.size.h)) {
-          this.onResize()
+    options: {
+      handler (newValue, oldValue) {
+        this.updateOptions(newValue)
+        if (oldValue.size && newValue.size) {
+          if ((oldValue.size.w !== newValue.size.w) || (oldValue.size.h !== newValue.size.h)) {
+            this.onResize()
+          }
         }
-      }
-      this.animate()
+        this.animate()
+      },
+      deep: true
     }
   },
   methods: {
@@ -243,7 +227,7 @@ export default {
         if (!node.name && node.name !== '0') vm.$set(node, 'name', 'node ' + node.id)
         if (node.svgSym) {
           node.svgIcon = svgExport.svgElFromString(node.svgSym)
-          if (!this.canvas && node.svgIcon && !node.svgObj) node.svgObj = svgExport.toObject(node.svgIcon)
+          if (node.svgIcon && !node.svgObj) node.svgObj = svgExport.toObject(node.svgIcon)
         }
         return node
       })
@@ -375,16 +359,8 @@ export default {
       this.mouseOfst = { x, y }
     },
     screenShot (name, bgColor, toSVG, svgAllCss) {
-      let exportFunc
-      let args = []
-      if (this.canvas) {
-        toSVG = false
-        exportFunc = this.$refs.canvas.canvasScreenShot
-        args = [bgColor]
-      } else {
-        exportFunc = this.$refs.svg.svgScreenShot
-        args = [toSVG, bgColor, svgAllCss]
-      }
+      const exportFunc = this.$refs.svg.svgScreenShot
+      const args = [toSVG, bgColor, svgAllCss]
       if (toSVG) name = name || 'export.svg'
 
       exportFunc((err, url) => {
