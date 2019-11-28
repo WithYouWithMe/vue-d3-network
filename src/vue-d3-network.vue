@@ -1,3 +1,27 @@
+<template lang="pug">
+  .net(@mousemove="move" @touchmove="move")
+    svg-renderer(
+      ref="svg"
+      :size="size"
+      :nodes="nodes"
+      :links="links"
+      :selected="selected"
+      :linksSelected="linksSelected"
+      :strLinks="strLinks"
+      :linkWidth="linkWidth"
+      :nodeLabels="nodeLabels"
+      :linkLabels="linkLabels"
+      :fontSize="fontSize"
+      :labelOffset="labelOffset"
+      :offset="offset"
+      :padding="padding"
+      :nodeSize="nodeSize"
+      :noNodes="noNodes"
+      :nodeSym="nodeSvg"
+      @action="methodCall"
+    )
+</template>
+
 <script>
 import * as d3 from "d3";
 import svgRenderer from "./components/svgRenderer.vue";
