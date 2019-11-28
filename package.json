@@ -15,10 +15,7 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/emiliorizzo/vue-d3-network"
-  },
-  "bugs": {
-    "url": "https://github.com/emiliorizzo/vue-d3-network/issues"
+    "url": "https://github.com/WithYouWithMe/vue-d3-network"
   },
   "keywords": [
     "vue",
@@ -33,16 +30,16 @@
     "d3": "^5.14.2"
   },
   "devDependencies": {
-    "@vue/cli-plugin-babel": "^3.4.0",
-    "@vue/cli-plugin-eslint": "^3.4.0",
-    "@vue/cli-service": "^3.4.0",
-    "@vue/eslint-config-standard": "^3.0.0-rc.5",
-    "pug": "^2.0.3",
+    "@vue/cli-plugin-babel": "^4.1.1",
+    "@vue/cli-plugin-eslint": "^4.1.1",
+    "@vue/cli-service": "^4.1.1",
+    "@vue/eslint-config-standard": "^5.0.0",
+    "pug": "^2.0.4",
     "pug-plain-loader": "^1.0.0",
-    "raw-loader": "^0.5.1",
+    "raw-loader": "^4.0.0",
     "stylus": "^0.54.5",
     "stylus-loader": "^3.0.2",
-    "vue": "^2.5.16",
-    "vue-template-compiler": "^2.5.16"
+    "vue": "^2.6.10",
+    "vue-template-compiler": "^2.6.10"
   }
 }

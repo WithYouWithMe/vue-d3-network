@@ -212,6 +212,7 @@ export default {
     // -- Data
     updateOptions(options) {
       for (const op in options) {
+        // eslint-disable-next-line no-prototype-builtins
         if (this.hasOwnProperty(op)) {
           this[op] = options[op];
         }
@@ -404,7 +405,7 @@ export default {
 
     return createElement("div", {
       attrs: { class: "net" },
-      on: { "mousemove": this.move, "&touchmove": this.move },
+      on: { mousemove: this.move, "&touchmove": this.move },
     }, [createElement(renderer, {
       props, ref, on: { action: this.methodCall },
     })]);

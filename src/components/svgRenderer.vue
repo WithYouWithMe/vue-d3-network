@@ -111,6 +111,8 @@ export default {
     },
     linkClass(linkId) {
       const cssClass = ["link"];
+
+      // eslint-disable-next-line no-prototype-builtins
       if (this.linksSelected.hasOwnProperty(linkId)) {
         cssClass.push("selected");
       }
