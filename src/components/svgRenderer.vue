@@ -88,10 +88,9 @@ export default {
       if (!result) {
         result = getDimensions(node.html, {}, "");
         node.dimensions = result;
-        console.log(node.html, result);
       }
 
-      return result[side];
+      return result[side] + 10;
     },
     emit(e, args) {
       this.$emit("action", e, args);
