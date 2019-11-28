@@ -30,7 +30,7 @@
     "component"
   ],
   "dependencies": {
-    "d3-force": "^1.0.6"
+    "d3": "^5.14.2"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "^3.4.0",
