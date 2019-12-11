@@ -6,8 +6,8 @@
   "scripts": {
     "example": "vue-cli-service build --dest example",
     "dev": "vue-cli-service serve",
-    "build": "npm run build-component && npm run clean-dist",
-    "build-component": "vue-cli-service build --target lib --name vue-d3-network src/vue-d3-network.vue",
+    "build": "yarn build-component && yarn clean-dist",
+    "build-component": "vue-cli-service build --target lib src/vue-d3-network.vue",
     "lint": "vue-cli-service lint",
     "clean-dist": "rm dist/demo.html"
   },
@@ -30,10 +30,10 @@
     "d3": "^5.14.2"
   },
   "devDependencies": {
-    "@vue/cli-plugin-babel": "^4.1.1",
-    "@vue/cli-plugin-eslint": "^4.1.1",
-    "@vue/cli-service": "^4.1.1",
-    "@vue/eslint-config-standard": "^5.0.0",
+    "@vue/cli-plugin-babel": "^3.4.0",
+    "@vue/cli-plugin-eslint": "^3.4.0",
+    "@vue/cli-service": "^3.4.0",
+    "@vue/eslint-config-standard": "^3.0.0",
     "pug": "^2.0.4",
     "pug-plain-loader": "^1.0.0",
     "raw-loader": "^4.0.0",
